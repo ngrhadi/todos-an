@@ -1,0 +1,149 @@
+@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap);
+
+body {
+  margin: 0;
+  font-family: 'Poppins';
+  background-color: #E5E5E5;
+}
+
+.App-header {
+  position: absolute;
+  width: 100vw;
+  height: 105px;
+  left: 0px;
+  top: 0px;
+  background: #16ABF8;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  align-items: center;
+}
+
+.App-name {
+  font-weight: 700;
+  font-size: 24px;
+  text-transform: uppercase;
+  margin-left: 5%;
+  margin: 34.5px 0px 0px 9%;
+  color: #FFFFFF;
+}
+
+.App-body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding-top: 3.5em;
+  margin: 20px 9%;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 36px;
+}
+
+.App-body-header {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 36px;
+}
+
+.App-body-header-button {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 13px 21px 13px 14px;
+  gap: 6px;
+  background: #16ABF8;
+  border-radius: 45px;
+  border: none;
+  height: 54px;
+  width: 159px;
+
+}
+
+.App-body-button-text {
+  color: #FFFFFF;
+  margin-left: 5px;
+  font-weight: 600;
+  font-size: 18px;
+  order: 1;
+  flex-grow: 0;
+}
+
+.Icon-Home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.App-body-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: start;
+  margin: 0 9%;
+}
+
+.App-body-content :hover {
+  cursor: pointer;
+}
+
+.App-body-content-item {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  position: relative;
+  padding: 22px;
+  margin: 10px 10px;
+  background-color: #FFFFFF;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  justify-content: start;
+  align-items: center;
+  width: 235px;
+  height: 234px;
+}
+
+.App-body-content-item-header-title {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 27px;
+  color: #111111;
+  margin-left: 5px;
+}
+
+.App-body-content-delete {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  bottom: 0;
+  width: 100%;
+  margin-top: 180px;
+}
+
+.App-body-content-item-header-date {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  color: #888888;
+  margin-left: 5px;
+}
+
+.App-body-content-delete-button {
+  background-color: transparent;
+  border: none;
+}
+
+.App-body-content-delete-button :hover {
+  cursor: pointer;
+}
+
+link :hover {
+  cursor: pointer;
+}
