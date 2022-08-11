@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap);
 
 body {
-  margin: 0;
+  margin: 0 5%;
   font-family: 'Poppins';
   background-color: #E5E5E5;
 }
@@ -21,9 +21,14 @@ body {
   font-weight: 700;
   font-size: 24px;
   text-transform: uppercase;
-  margin-left: 5%;
-  margin: 34.5px 0px 0px 9%;
+  margin: 34.5px 0px 0px 4%;
+  text-decoration: none;
   color: #FFFFFF;
+}
+
+.App-name :hover {
+  cursor: pointer;
+  color: #E5E5E5;
 }
 
 .App-body {
@@ -31,7 +36,7 @@ body {
   flex-direction: row;
   flex-wrap: nowrap;
   padding-top: 3.5em;
-  margin: 20px 9%;
+  margin: 20px 10%;
   justify-content: center;
   align-items: center;
   font-weight: 700;
@@ -42,10 +47,11 @@ body {
   display: flex;
   width: 100%;
   flex-direction: row;
+  font-weight: bold;
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
-  font-weight: 700;
+  /* font-weight: 700; */
   font-size: 36px;
 }
 
@@ -67,11 +73,19 @@ body {
 
 .App-body-button-text {
   color: #FFFFFF;
-  margin-left: 5px;
-  font-weight: 600;
+  font-weight: 610;
   font-size: 18px;
   order: 1;
   flex-grow: 0;
+  top: 50%;
+  bottom: 50%;
+}
+
+.Icon-tambah {
+  top: 50%;
+  bottom: 50%;
+  margin-top: -2px;
+  margin-right: 10px;
 }
 
 .Icon-Home {
@@ -87,11 +101,18 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: start;
-  margin: 0 9%;
 }
 
 .App-body-content :hover {
   cursor: pointer;
+}
+
+.App-body-content-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: start;
+  align-items: center;
 }
 
 .App-body-content-item {
@@ -109,6 +130,17 @@ body {
   height: 234px;
 }
 
+.App-body-content-item-list {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  margin-bottom: 10px;
+  padding: 27px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 15%);
+}
+
 .App-body-content-item-header-title {
   font-weight: 700;
   font-size: 18px;
@@ -117,22 +149,38 @@ body {
   margin-left: 5px;
 }
 
+.App-body-content-item-list-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin-right: 16px;
+}
+
 .App-body-content-delete {
+  position: absolute;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  bottom: 0;
-  width: 100%;
-  margin-top: 180px;
+  bottom: 10px;
+  width: 200px;
+  /* margin-top: 150px; */
 }
 
 .App-body-content-item-header-date {
+  bottom: 0;
   font-weight: 500;
   font-size: 14px;
   line-height: 21px;
   color: #888888;
   margin-left: 5px;
+}
+
+.App-body-content-item-list-status {
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  margin: 0 19px 0 27px;
+  background-color: red;
 }
 
 .App-body-content-delete-button {
@@ -141,9 +189,16 @@ body {
 }
 
 .App-body-content-delete-button :hover {
+  background-color: #111111;
+  border-radius: 10px;
   cursor: pointer;
 }
 
 link :hover {
   cursor: pointer;
+}
+
+a,
+link {
+  text-decoration: none;
 }
