@@ -90,7 +90,10 @@ const Home = () => {
 			<div className="App-body">
 				<div className="App-body-header">
 					Activity
-					<button className="App-body-header-button" onClick={addTodos}>
+					<button
+						className="App-body-header-button"
+						onClick={addTodos}
+						data-cy="activity-add-button">
 						{publishTodo ? (
 							<Spinner animation="border" variant="light" />
 						) : (
@@ -111,14 +114,16 @@ const Home = () => {
 			<div className="App-body-content">
 				{todo.map((item, index) => {
 					return (
-						<div key={index}>
+						<div key={index} data-cy="activity-item">
 							<div className="App-body-content-item">
 								<Link
 									to={`/detail-todo/${item.id}`}
 									key={index}
 									className="text-decoration-none">
 									<div className="App-body-content-item-header">
-										<div className="App-body-content-item-header-title">
+										<div
+											className="App-body-content-item-header-title"
+											data-cy="activity-title">
 											{item.title}
 										</div>
 									</div>
@@ -130,7 +135,8 @@ const Home = () => {
 
 									<button
 										className="App-body-content-delete-button"
-										onClick={handleModalDeleteTodo}>
+										onClick={handleModalDeleteTodo}
+										data-cy="activity-item-delete-button">
 										<span>
 											<img
 												src={I_trash}

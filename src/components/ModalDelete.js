@@ -36,7 +36,7 @@ export default function ModalDelete(props) {
 								</Modal.Title>
 							</Modal.Header>
 							<Modal.Body>
-								<p>
+								<p data-cy="modal-information">
 									Are you sure you want to delete{" "}
 									<strong>{props.data.title}</strong> ?
 								</p>
@@ -51,6 +51,7 @@ export default function ModalDelete(props) {
 								</button>
 								<button
 									className="btn btn-secondary"
+									data-cy="modal-delete-cancel-button"
 									onClick={props.handleclose}>
 									Cancel
 								</button>

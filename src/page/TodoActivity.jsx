@@ -69,6 +69,7 @@ const TodoActivity = () => {
 					</span>
 					<button
 						className="App-body-header-button"
+						data-cy="todo-add-button"
 						onClick={handleShowAddTodo}>
 						<span className="Icon-tambah">
 							<img src={I_tambah} alt="tambah" height="15px" />
@@ -87,7 +88,10 @@ const TodoActivity = () => {
 
 				{data.todo_items !== null &&
 					data.todo_items.map((todo) => (
-						<div className="App-body-content-list mx-lg-5" key={todo.id}>
+						<div
+							className="App-body-content-list mx-lg-5"
+							data-cy="activity-item"
+							key={todo.id}>
 							<div className="App-body-content-item-list">
 								<div className="d-flex align-items-center form-check">
 									<button type="checkbox" className="form-check-input" />
@@ -95,18 +99,24 @@ const TodoActivity = () => {
 									<div className="App-body-content-item-list-status">
 										<div className="status-prioity" />
 									</div>
-									<div className="App-body-content-item-list-title">
+									<div
+										className="App-body-content-item-list-title"
+										data-cy="todo-title">
 										{todo.title}
 									</div>
 								</div>
 								<span className="text-end pointer-event ">
-									<img
-										src={I_trash}
-										alt="tambah"
-										width={14}
-										height={14}
-										className="mx-1"
-									/>
+									<button
+										onClick={() => {}}
+										data-cy="activity-item-delete-button">
+										<img
+											src={I_trash}
+											alt="tambah"
+											width={14}
+											height={14}
+											className="mx-1"
+										/>
+									</button>
 								</span>
 							</div>
 						</div>
@@ -131,6 +141,7 @@ const TodoActivity = () => {
 									<Form.Group data-cy="form-add-todo">
 										<Form.Label>Title</Form.Label>
 										<Form.Control
+											data-cy="modal-add-name-input"
 											type="text"
 											name="title"
 											placeholder="Title"
@@ -143,6 +154,7 @@ const TodoActivity = () => {
 										<Form.Select
 											// as="select"
 											itemType="option"
+											data-cy="modal-add-priority-dropdown"
 											name="priority"
 											onChange={(e) => setIsPriorityTodo(e.target.value)}
 											required>
@@ -156,16 +168,20 @@ const TodoActivity = () => {
 									</Form.Group>
 								</Form>
 
-								<div className="modal-footer">
+								<div
+									className="modal-footer"
+									data-cy="modal-delete-cancel-button">
 									<button
 										type="button"
 										className="btn btn-secondary"
 										data-dismiss="modal"
+										data-cy="activity-item-delete-button"
 										onClick={() => setModalAddTodo(false)}>
 										Close
 									</button>
 									<button
 										type="button"
+										data-cy="modal-add-save-button"
 										className="btn btn-primary"
 										onClick={handleAddListTodo}>
 										Save changes
