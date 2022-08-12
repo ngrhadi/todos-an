@@ -38,7 +38,7 @@ export default function ModalDelete(props) {
 							<Modal.Body>
 								<p>
 									Are you sure you want to delete{" "}
-									<strong>{props.data.title}</strong>?
+									<strong>{props.data.title}</strong> ?
 								</p>
 							</Modal.Body>
 							<Modal.Footer>

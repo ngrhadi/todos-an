@@ -21,7 +21,7 @@ body {
   font-weight: 700;
   font-size: 24px;
   text-transform: uppercase;
-  margin: 34.5px 0px 0px 4%;
+  margin: 34.5px 0px 0px 5%;
   text-decoration: none;
   color: #FFFFFF;
 }
@@ -100,7 +100,7 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: start;
+  justify-content: center;
 }
 
 .App-body-content :hover {
@@ -180,6 +180,10 @@ body {
   width: 14px;
   border-radius: 50%;
   margin: 0 19px 0 27px;
+  background-color: red;
+}
+
+.list-status-very-high {
   background-color: red;
 }
 

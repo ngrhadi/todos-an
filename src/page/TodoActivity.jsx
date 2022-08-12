@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useState } from "react";
+import { Form, Modal } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import TodosForm from "../components/TodosForm";
 import { getTodoByID, URL_LIST_TODOS, URL_POST_TODO } from "../hooks/useTodos";
@@ -10,13 +11,7 @@ import I_trash from "../icons/trash.png";
 const TodoActivity = () => {
 	const [todoTitle, setTodoTitle] = useState("");
 	const [isActiveTodo, setIsActiveTodo] = useState(0);
-	const [isPriorityTodo, setIsPriorityTodo] = useState({
-		very_high: false,
-		high: false,
-		medium: false,
-		low: false,
-		very_low: false,
-	});
+	const [isPriorityTodo, setIsPriorityTodo] = useState([]);
 	const [modalAddTodo, setModalAddTodo] = useState(false);
 	const { id } = useParams();
 	const { data, isLoading, isError, isSuccess } = useQuery(
@@ -36,77 +31,66 @@ const TodoActivity = () => {
 					},
 				],
 			},
-			refetchInterval: 1000,
+			refetchInterval: 3000,
 		},
 	);
 
-	const addListTodo = useMutation(
-		(newListTodo) => {
-			axios.post(`${URL_LIST_TODOS}`, newListTodo);
-		},
-		{
-			onSuccess: (data) => {
-				console.log(data);
-			},
-			onError: (error) => {
-				console.log(error);
-			},
-			onSettled: (data) => {
-				console.log(data);
-			},
-		},
-	);
+	const addListTodo = useMutation((newListTodo) => {
+		axios.post(`${URL_LIST_TODOS}`, newListTodo);
+	});
 	console.log(data);
+
+	const handleShowAddTodo = () => {
+		setModalAddTodo(true);
+	};
 
 	const handleAddListTodo = (e) => {
 		e.preventDefault();
-		setModalAddTodo(true);
+		setModalAddTodo(false);
 		const newListTodo = {
-			title: e.target.title.value,
-			activity_group_id: e.target.activity_group_id.value,
-			isActive: e.target.isActive.value,
-			priority: e.target.priority.value,
+			title: e.target.value,
+			activity_group_id: id,
+			isActive: e.target.value,
+			priority: e.target.value,
 		};
+		console.log(newListTodo);
 		addListTodo.mutate(newListTodo);
-
-		e.target.reset();
 	};
 
 	return (
 		<>
-			<div className="container">
-				<div className="App-body">
-					<div className="App-body-header">
-						<span>
-							<Link to={"/"} className="text-decoration-none text-dark me-4">
-								{"<"}
-							</Link>
-							New Activity
+			<div className="App-body">
+				<div className="App-body-header">
+					<span>
+						<Link to={"/"} className="text-decoration-none text-dark me-4">
+							{"<"}
+						</Link>
+						New Activity
+					</span>
+					<button
+						className="App-body-header-button"
+						onClick={handleShowAddTodo}>
+						<span className="Icon-tambah">
+							<img src={I_tambah} alt="tambah" height="15px" />
 						</span>
-						<button
-							className="App-body-header-button"
-							onClick={handleAddListTodo}>
-							<span className="Icon-tambah">
-								<img src={I_tambah} alt="tambah" height="15px" />
-							</span>
-							<div className="App-body-button-text">Tambah</div>
-						</button>
-					</div>
+						<div className="App-body-button-text">Tambah</div>
+					</button>
+				</div>
 
-					{data && !modalAddTodo && (
+				{/* {data && !modalAddTodo && (
 						<TodosForm
 							title={todoTitle}
 							isActive={isActiveTodo}
 							isPriority={isPriorityTodo}
 						/>
-					)}
-				</div>
+					)} */}
+
 				{data.todo_items !== null &&
 					data.todo_items.map((todo) => (
 						<div className="App-body-content-list mx-lg-5" key={todo.id}>
 							<div className="App-body-content-item-list">
 								<div className="d-flex align-items-center form-check">
-									<input type="checkbox" className="form-check-input" />
+									<button type="checkbox" className="form-check-input" />
 									{/* {todo.isActive === 1 ? () : ()} */}
 									<div className="App-body-content-item-list-status">
 										<div className="status-prioity" />
@@ -128,22 +112,77 @@ const TodoActivity = () => {
 						</div>
 					))}
 			</div>
-			{modalAddTodo && (
-				<div className="modal-dialog modal-md modal-dialog-centered">
-					<div className="modal-content">
-						<div className="modal-header">
-							<h5 className="modal-title">Tambah Todo</h5>
-							<button
-								type="button"
-								className="close"
-								data-dismiss="modal"
-								aria-label="Close"
-								onClick={() => setModalAddTodo(false)}>
-								<span aria-hidden="true">&times;</span>
-							</button>
+			{modalAddTodo ? (
+				<div className="modal fade">
+					<Modal
+						size="lg"
+						show={modalAddTodo}
+						onHide={() => setModalAddTodo(false)}
+						style={{
+							fontFamily: "Poppins",
+						}}
+						centered>
+						<div className="modal-content">
+							<Modal.Header closeButton>
+								<h5 className="modal-title">Tambah Todo</h5>
+							</Modal.Header>
+							<div className="modal-body">
+								<Form onSubmit={handleAddListTodo} method="POST">
+									<Form.Group data-cy="form-add-todo">
+										<Form.Label>Title</Form.Label>
+										<Form.Control
+											type="text"
+											name="title"
+											placeholder="Title"
+											onChange={(e) => setTodoTitle(e.target.value)}
+											required
+										/>
+									</Form.Group>
+									<Form.Group>
+										<Form.Label>Priority</Form.Label>
+										<Form.Select
+											// as="select"
+											itemType="option"
+											name="priority"
+											onChange={(e) => setIsPriorityTodo(e.target.value)}
+											required>
+											<option value="">Pilih Priority</option>
+											<option value="very-high">Very High</option>
+											<option value="high">High</option>
+											<option value="medium">Medium</option>
+											<option value="low">Low</option>
+											<option value="very-low">Very Low</option>
+										</Form.Select>
+									</Form.Group>
+								</Form>
+
+								<div className="modal-footer">
+									<button
+										type="button"
+										className="btn btn-secondary"
+										data-dismiss="modal"
+										onClick={() => setModalAddTodo(false)}>
+										Close
+									</button>
+									<button
+										type="button"
+										className="btn btn-primary"
+										onClick={handleAddListTodo}>
+										Save changes
+									</button>
+								</div>
+							</div>
 						</div>
-						<div className="modal-body">
-							<div className="form-check">
+					</Modal>
+				</div>
+			) : null}
+		</>
+	);
+};
+
+export default TodoActivity;
+{
+	/* <div className="form-check">
 								<ul className="dropdown-menu">
 									<li className="dropdown-item">
 										<input
@@ -204,27 +243,5 @@ const TodoActivity = () => {
 									</li>
 								</ul>
 							</div>
-						</div>
-						<div className="modal-footer">
-							<button
-								type="button"
-								className="btn btn-secondary"
-								data-dismiss="modal"
-								onClick={() => setModalAddTodo(false)}>
-								Close
-							</button>
-							<button
-								type="button"
-								className="btn btn-primary"
-								onClick={handleAddListTodo}>
-								Save changes
-							</button>
-						</div>
-					</div>
-				</div>
-			)}
-		</>
-	);
-};
-
-export default TodoActivity;
+						</div> */
+}
