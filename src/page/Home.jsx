@@ -6,17 +6,17 @@ import { URL_POST_TODO, URL_TODOS, useTodos } from "../hooks/useTodos";
 import { QueryClient, useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { Alert, Modal } from "bootstrap";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import TodoActivity from "./TodoActivity";
 import { Card, Spinner } from "react-bootstrap";
 import ModalDelete from "../components/ModalDelete";
 
 const Home = () => {
+	const { id } = useParams();
 	const [todo, setTodo] = useState([]);
 	const queryClient = new QueryClient();
 	const [publishTodo, setPublishTodo] = useState(false);
 	const [detailsTodo, setDetailsTodo] = useState(false);
-	const [modalDeleteTodo, setModalDeleteTodo] = useState(false);
 	const [deleteTodo, setDeleteTodo] = useState(false);
 
 	const { data, isError, isLoading, isSuccess } = useTodos();
@@ -65,9 +65,9 @@ const Home = () => {
 	};
 
 	const addTodos = async () => {
-		// const id = Math.floor(Math.random() * 1000000);
+		const id = Math.floor(Math.random() * 1000000);
 		const data = {
-			title: `New Activity`,
+			title: `New Activity ${id}`,
 		};
 		setPublishTodo(true);
 		const response = await axios.post(URL_POST_TODO, data);
@@ -78,85 +78,88 @@ const Home = () => {
 		}
 	};
 
-	const deleteTodos = useMutation((id) => axios.delete(`${URL_TODOS}/${id}`), {
-		onSuccess: () => {
-			setDeleteTodo(false);
-		},
-		onError: () => {
-			setDeleteTodo(false);
-		},
-	});
-
-	const handleDeleteTodo = (id) => {
-		setModalDeleteTodo(true);
-		setDeleteTodo(true);
-		deleteTodos.mutate(id);
+	const [modalDeleteTodo, setModalDeleteTodo] = useState(false);
+	const [idDeleteTodo, setIdDeleteTodo] = useState(null);
+	const handleModalDeleteTodo = () => {
+		setModalDeleteTodo(!modalDeleteTodo);
+		setIdDeleteTodo(todo.map((item) => item));
 	};
+	const handleModalDeleteTodoClose = () => setModalDeleteTodo(false);
 
+	console.log(todo);
 	return (
-		<div className="container">
-			<div className="App-body">
-				<div className="App-body-header">
-					Activity
-					<button className="App-body-header-button" onClick={addTodos}>
-						{publishTodo ? (
-							<Spinner animation="border" variant="light" />
-						) : (
-							<span className="Icon-tambah">
-								<img src={I_tambah} alt="tambah" height="15px" />
-							</span>
-						)}
-						<div className="App-body-button-text">Tambah</div>
-					</button>
+		<>
+			<div className="container">
+				<div className="App-body">
+					<div className="App-body-header">
+						Activity
+						<button className="App-body-header-button" onClick={addTodos}>
+							{publishTodo ? (
+								<Spinner animation="border" variant="light" />
+							) : (
+								<span className="Icon-tambah">
+									<img src={I_tambah} alt="tambah" height="15px" />
+								</span>
+							)}
+							<div className="App-body-button-text">Tambah</div>
+						</button>
+					</div>
 				</div>
-			</div>
-			{isError && <div>Error</div>}
-			{!todo && (
-				<div className="Icon-Home">
-					<img src={I_home} alt="home" width={"767px"} />
-				</div>
-			)}
-			<div className="App-body-content">
-				{todo.map((item, index) => {
-					return (
-						<Link
-							to={`/detail-todo/${item.id}`}
-							key={index}
-							className="text-decoration-none">
-							<div className="App-body-content-item" key={index}>
-								<div className="App-body-content-item-header">
-									<div className="App-body-content-item-header-title">
-										{item.title}
+				{isError && <div>Error</div>}
+				{!todo && (
+					<div className="Icon-Home">
+						<img src={I_home} alt="home" width={"767px"} />
+					</div>
+				)}
+				<div className="App-body-content">
+					{todo.map((item, index) => {
+						return (
+							<div key={index}>
+								<div className="App-body-content-item">
+									<Link
+										to={`/detail-todo/${item.id}`}
+										key={index}
+										className="text-decoration-none">
+										<div className="App-body-content-item-header">
+											<div className="App-body-content-item-header-title">
+												{item.title}
+											</div>
+										</div>
+									</Link>
+									<div className="App-body-content-delete">
+										<div className="App-body-content-item-header-date">
+											{showFormatDate(item.created_at).toString()}
+										</div>
+
+										<button
+											className="App-body-content-delete-button"
+											onClick={handleModalDeleteTodo}>
+											<span>
+												<img
+													src={I_trash}
+													alt="tambah"
+													width={14}
+													height={14}
+													className="mx-1"
+												/>
+											</span>
+										</button>
 									</div>
-								</div>
-								<div className="App-body-content-delete">
-									<div className="App-body-content-item-header-date">
-										{showFormatDate(item.created_at).toString()}
-									</div>
-									<button
-										className="App-body-content-delete-button"
-										onClick={handleDeleteTodo}>
-										{/* <Link to={"/"} className="text-decoration-none"> */}
-										<span>
-											<img
-												src={I_trash}
-												alt="tambah"
-												width={14}
-												height={14}
-												className="mx-1"
-											/>
-										</span>
-										{/* </Link> */}
-									</button>
 								</div>
 							</div>
-						</Link>
-					);
-				})}
-				{detailsTodo ? <TodoActivity data-cy={data} /> : null}
-				{modalDeleteTodo && <ModalDelete />}
+						);
+					})}
+				</div>
 			</div>
-		</div>
+			{modalDeleteTodo ? (
+				<ModalDelete
+					data={idDeleteTodo[0]}
+					deleteTodo={deleteTodo}
+					handleclose={handleModalDeleteTodoClose}
+				/>
+			) : null}
+			{detailsTodo ? <TodoActivity data={data} /> : null}
+		</>
 	);
 };
 

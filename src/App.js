@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import Header from "./page/Header";
 import "bootstrap/dist/css/bootstrap.css";
 import TodoActivity from "./page/TodoActivity";
+import ModalDelete from "./components/ModalDelete";
 
 function App() {
 	return (
@@ -11,7 +12,7 @@ function App() {
 			<Routes>
 				<Route path="/" exact element={<Home />} />
 				<Route path="/detail-todo/:id" exact element={<TodoActivity />} />
-				<Route path="/todo-activity/:id" element={<Home />} />
+				<Route path="/delete-todo/:id" element={<ModalDelete />} />
 			</Routes>
 		</BrowserRouter>
 	);

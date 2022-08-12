@@ -7,7 +7,7 @@ import { getTodoByID, URL_LIST_TODOS, URL_POST_TODO } from "../hooks/useTodos";
 import I_tambah from "../icons/tambah.png";
 import I_trash from "../icons/trash.png";
 
-const TodoActivity = (props) => {
+const TodoActivity = () => {
 	const [todoTitle, setTodoTitle] = useState("");
 	const [isActiveTodo, setIsActiveTodo] = useState(0);
 	const [isPriorityTodo, setIsPriorityTodo] = useState({

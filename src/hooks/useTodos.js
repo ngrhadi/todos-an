@@ -33,7 +33,7 @@ export const useTodos = () => {
 		["todos"],
 		getTodosList,
 		{
-			refetchInterval: 2000,
+			refetchInterval: 3000,
 		},
 	);
 
